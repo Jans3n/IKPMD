@@ -19,7 +19,7 @@ class _LoginPageState extends State<LoginPage> {
         padding: const EdgeInsets.all(16),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
+          // crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Text(
               "MyMoney",
@@ -30,7 +30,8 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
             const Text(
-              "Login to MyMoney",
+              "Login",
+              textAlign: TextAlign.center,
               style: TextStyle(
                 color: Colors.black,
                 fontSize: 44,
@@ -38,7 +39,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
             const SizedBox(
-              height: 44,
+              height: 80,
             ),
             const TextField(
               keyboardType: TextInputType.emailAddress,
@@ -73,7 +74,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
             const SizedBox(
-              height: 88,
+              height: 50,
             ),
             Container(
               width: double.infinity,
