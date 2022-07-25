@@ -34,7 +34,7 @@ class _LoginPageState extends State<LoginPage> {
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Colors.black,
-                fontSize: 44,
+                fontSize: 60,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -63,14 +63,25 @@ class _LoginPageState extends State<LoginPage> {
             ),
             RichText(
               text: TextSpan(
-                text: "Create a account",
-                style: TextStyle(
-                  color: Colors.blue,
-                ),
-                recognizer: TapGestureRecognizer()
-                  ..onTap = () {
-                  Navigator.pushNamed(context, '/main');
-                  }
+                children: [
+                  TextSpan(
+                    text: "No account?  ",
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 16,
+                    ),
+                  ),
+                  TextSpan(
+                    text: "Register",
+                    style: TextStyle(
+                      color: Colors.blue,
+                    ),
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () {
+                        Navigator.pushNamed(context, '/register');
+                      },
+                  ),
+                ],
               ),
             ),
             const SizedBox(
@@ -85,7 +96,9 @@ class _LoginPageState extends State<LoginPage> {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamedAndRemoveUntil(context, '/main', (route) => false);
+                },
                 child: Text(
                   "Login",
                   style: TextStyle(
