@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:ikpmd/pages/debt_page.dart';
 import 'package:ikpmd/pages/loaned_page.dart';
 import 'package:ikpmd/providers/borrowed_user.dart';
@@ -8,7 +9,8 @@ import 'package:ikpmd/pages/main_page.dart';
 import 'package:ikpmd/pages/overview_page.dart';
 import 'package:ikpmd/pages/register_page.dart';
 
-void main() {
+Future main() async {
+  await dotenv.load();
   runApp(
     MultiProvider(providers: [
       ChangeNotifierProvider(create: (_) => BorrowedUsers())

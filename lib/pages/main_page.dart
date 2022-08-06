@@ -1,9 +1,7 @@
-// import 'dart:ffi';
-
+import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:ikpmd/UI/header.dart';
-// import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:ikpmd/pages/debt_page.dart';
 import 'package:ikpmd/pages/loaned_page.dart';
 import 'package:ikpmd/pages/overview_page.dart';
@@ -11,6 +9,7 @@ import 'package:flutter/services.dart';
 import 'package:ikpmd/providers/borrowed_user.dart';
 import 'package:provider/provider.dart';
 import 'package:ikpmd/UI/button_with_icon.dart';
+import 'package:http/http.dart' as http;
 
 import '../models/borrowed_user_model.dart';
 
@@ -22,7 +21,6 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  Header header = new Header();
   int _selectedIndex = 1;
 
   void _navigateBottomBar(int index) {
@@ -38,9 +36,24 @@ class _MainPageState extends State<MainPage> {
   ];
 
   @override
+  initState() {
+    if (mounted){
+      fetchAllBorrowers();
+    }
+  }
+
+  fetchAllBorrowers() async {
+    var response = await http.get(Uri.parse('${dotenv.env['URL']}borrowers'));
+    var parsedJson = json.decode(response.body);
+    print(parsedJson);
+    for (var borrower in parsedJson){
+      context.read<BorrowedUsers>().addBorrower(BorrowedUser(id: borrower["id"], name: borrower["name"], description: borrower["description"], amount: borrower["amount"]));
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
+    return  Scaffold(
         appBar: AppBar(
           elevation: 0,
           centerTitle: true,
@@ -75,8 +88,7 @@ class _MainPageState extends State<MainPage> {
             BottomNavigationBarItem(icon: Icon(Icons.money), label: "Lent to"),
           ],
         ),
-      ),
-    );
+      );
   }
 
   Widget headerSection(int pageNumber) {
@@ -341,5 +353,5 @@ class _MainPageState extends State<MainPage> {
       );
 
   BorrowedUser user =
-      BorrowedUser(name: "test", description: "testing", amount: 20);
+      BorrowedUser(id: 1, name: "Jansen", description: "testing", amount: 20.00);
 }
